@@ -100,15 +100,19 @@ let rec pair_up (l1 : 'a list) (l2 : 'b list) : ('a * 'b) list =
        possible pairs of elements selected from the two lists. Write a function
        that will return the cartesian product when given two lists. If either
        of the lists is empty, return an empty list.
+
+  # cartesian_product [1;3;5] [2;6] ;;
+  - : int list = [(1,2);(1,6);(3,2);(3,6);(5,2);(5,6)]
 *)
 
-let cartesian_product (l1 : 'a list) (l2 : 'b list) : ('a * 'b) list =
-  unimplemented ()
+let rec cartesian_product (l1 : 'a list) (l2 : 'b list) : ('a * 'b) list =
+  match l1, l2 with
+  | [], _ | _, [] -> []
+  | h1 :: t1, h2 :: t2 -> (h1, h2) :: (cartesian_product [h1] t2)@(cartesian_product t1 l2)
+;;
 
-(*
-# cartesian_product [1;3;5] [2;6] ;;
-- : int list = [(1,2);(1,6);(3,2);(3,6);(5,2);(5,6)]
-*)
+
+
 
 (* ************** Section Two: Hidato verifier ************** *)
 
