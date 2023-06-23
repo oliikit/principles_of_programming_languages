@@ -79,15 +79,21 @@ let rec mk_pairs (elt : 'a) (lst : 'b list) : ('a * 'b) list =
 (* 1c. Sometimes we wish to work with more than one list at a time. Given lists
        `l1` and `l2`, produce a list containing the pairwise elements in a tuple.
        You can assume the lists are of equal length.
+  # pair_up [1;2;3] ["a";"b";"c"] ;;
+  - : (int * string) list = [(1,"a"); (2,"b"); (3,"c")]
+  # pair_up ["Do";"Re";"Mi"] ["Deer";"Golden sun";"Name I call myself"]
+  - : (string * string) list = ([("Do","Deer");("Re","Golden sun");("Mi","Name I call myself")])
 *)
 
-let pair_up (l1 : 'a list) (l2 : 'b list) : ('a * 'b) list = unimplemented ()
-(*
-# pair_up [1;2;3] ["a";"b";"c"] ;;
-- : (int * string) list = [(1,"a"); (2,"b"); (3,"c")]
-# pair_up ["Do";"Re";"Mi"] ["Deer";"Golden sun";"Name I call myself"]
-- : (string * string) list = ([("Do","Deer");("Re","Golden sun");("Mi","Name I call myself")])
-*)
+let rec pair_up (l1 : 'a list) (l2 : 'b list) : ('a * 'b) list =
+  match l1 with
+  | [] -> []
+  | lst1 :: lst1s -> (match l2 with
+    | [] -> []
+    | lst2 :: lst2s -> (lst1, lst2) :: (pair_up lst1s lst2s)
+  )
+;;
+
 
 (*
    1d. A cartesian product of two lists will return a list containing all the
