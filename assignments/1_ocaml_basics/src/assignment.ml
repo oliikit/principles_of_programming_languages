@@ -31,6 +31,7 @@ you **cannot** use list library functions such as `List.hd` or `List.nth`
 
 *)
 
+(* TODO- remove *)
 (* Disables "unused variable" warning from dune while you're still solving these! *)
 [@@@ocaml.warning "-27"]
 
@@ -44,16 +45,19 @@ let unimplemented () = failwith "unimplemented"
 (*
   1a. Write a function that will return the value at a given index (location) in a list. Raise an 
       exception if the provided index is negative or out of bounds.  The first element is indexed 0.
+
+  # nth_exn 1 [1;2;3;4] ;;
+  - : int = 2
+  # nth_exn 2 ["TOS";"TNG";"DS9"] ;;
+  - : string = "DS9"
 *)
 
-let nth_exn (n : int) (lst : 'a list) : 'a = unimplemented ()
+let rec nth_exn (n : int) (lst : 'a list) =
+  match lst with
+  | [] -> failwith (""^(Int.to_string n)^" element is not in the list")
+  | x :: xs -> if n = 0 then x else nth_exn (n-1) xs
+;;
 
-(*
-# nth_exn 1 [1;2;3;4] ;;
-- : int = 2
-# nth_exn 2 ["TOS";"TNG";"DS9"] ;;
-- : string = "DS9"
-*)
 
 (*
   1b. Write a function that, when given an element elt and a list, will return a 
