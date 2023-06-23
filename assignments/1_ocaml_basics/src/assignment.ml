@@ -63,16 +63,18 @@ let rec nth_exn (n : int) (lst : 'a list) =
   1b. Write a function that, when given an element elt and a list, will return a 
       new list consisting of pairs of elt coupled with every element in the list.
       If the provided list is empty, simply return an empty list.
+  
+  # mk_pairs "int" [1;2;3;4] ;;
+  - : (string * int) list = [("int",1);("int",2);("int",3);("int",4)]
+  # mk_pairs "ST" ["TOS";"TNG";"DS9"] ;;
+  - : (string * string) list = [("ST","TOS");("ST","TNG");("ST","DS9")]
 *)
 
-let mk_pairs (elt : 'a) (lst : 'b list) : ('a * 'b) list = unimplemented ()
-
-(*
-# mk_pairs "int" [1;2;3;4] ;;
-- : (string * int) list = [("int",1);("int",2);("int",3);("int",4)]
-# mk_pairs "ST" ["TOS";"TNG";"DS9"] ;;
-- : (string * string) list = [("ST","TOS");("ST","TNG");("ST","DS9")]
-*)
+let rec mk_pairs (elt : 'a) (lst : 'b list) : ('a * 'b) list =
+  match lst with
+  | [] -> []
+  | x :: xs -> (elt, x)  :: (mk_pairs elt xs)
+;;
 
 (* 1c. Sometimes we wish to work with more than one list at a time. Given lists
        `l1` and `l2`, produce a list containing the pairwise elements in a tuple.
